@@ -49,7 +49,7 @@
 #'
 #' @export
 getsrtm <- function() {
-  if (!file.exists(paste0(path.package("srtmVN"), "/extdata/srtm90.tif"))) {
+  if (!file.exists(paste0(installed.packages()["srtmVN", "LibPath"], "/srtmVN/extdata/srtm90.tif"))) {
     message("SRTM data are not on disk.")
     message("Do you want to download them from the internet (108.0 MB)? y (default) / n")
     ans <- readline()
