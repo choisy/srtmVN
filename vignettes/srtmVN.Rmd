@@ -1,0 +1,55 @@
+---
+title: "Using `srtmVN`"
+author: "Marc Choisy"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using srtmVN}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include=F}
+knitr::knit_hooks$set(margin = function(before,options,envir) {
+if(before) par(mgp=c(1.5,0.5,0),bty="n",plt=c(.105,.97,.13,.97)) else NULL })
+
+knitr::opts_chunk$set(margin=T,prompt=T,comment="",collapse=T,cache=F,
+dev.args=list(pointsize=11),fig.height=3.5,
+fig.width=4.24725,fig.retina=2,fig.align="center")
+```
+
+## Installation and loading
+
+You can install `srtmVN` from [Bitbucket](https://bitbucket.org/choisy/srtmVN)
+
+```{r eval = FALSE}
+# install.packages("devtools")
+devtools::install_bitbucket("choisy/srtmVN", build_vignettes = TRUE)
+```
+
+Once installed, you can load the package:
+
+```{r}
+library(srtmVN)
+```
+
+## Usage examples
+
+The `RasterLayer` DEM from SRTM can be retrieved with the `getsrtm` function:
+
+```{r}
+srtm <- getsrtm()
+```
+
+It's a `RasterLayer` object:
+
+```{r}
+srtm
+```
+
+that can be plotted with the `plot` method:
+
+```{r}
+plot(srtm)
+```
+
