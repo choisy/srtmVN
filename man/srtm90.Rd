@@ -20,7 +20,10 @@ Vietnam from the SRTM90.
 }
 \examples{
 ## Plotting the elevations of Vietnam:
+\dontrun{
+srtm90 <- getsrtm()
 plot(srtm90)
+}
 ## Extracting the elevation in one location:
 ## raster::extract
 }

@@ -9,7 +9,9 @@
 #' @author Marc Choisy
 #' @examples
 #' ## Plotting the elevations of Vietnam:
+#' \dontrun{
 #' plot(srtm90)
+#' }
 #' ## Extracting the elevation in one location:
 #' ## raster::extract
 "srtm90"
