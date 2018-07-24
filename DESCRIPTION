@@ -7,7 +7,7 @@ Authors@R: person("Marc", "Choisy",
                   role = c("aut", "cre", "cph"),
                   comment = c(ORCID = "https://orcid.org/0000-0002-5187-6390"))
 Description: Contains the elevation data for Vietnam from the SRTM90 data base
-    (CGIAR)
+    (CGIAR).
 License: MIT + file LICENSE
 Depends:
     R (>= 2.10)

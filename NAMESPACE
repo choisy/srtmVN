@@ -2,3 +2,5 @@
 
 export(getsrtm)
 importFrom(mcdev,download)
+importFrom(utils,data)
+importFrom(utils,installed.packages)

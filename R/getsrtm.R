@@ -46,6 +46,7 @@
 #' mean(unlist(ele_dalat))
 #'
 #' @importFrom mcdev download
+#' @importFrom utils data installed.packages
 #'
 #' @export
 getsrtm <- function() {
