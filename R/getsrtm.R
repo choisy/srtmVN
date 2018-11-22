@@ -54,8 +54,7 @@ getsrtm <- function() {
     message("Do you want to download them from the internet (108.0 MB)? y (default) / n")
     ans <- readline()
     if (ans %in% c("y", ""))
-#      download("www.dropbox.com/s/94e42dmq3y0li3y/srtm90.tif?raw=1", "srtmVN", "srtm90.tif")
-      download("http://marcchoisy.free.fr/srtm90.tif", "srtmVN", "srtm90.tif")
+      download("www.dropbox.com/s/94e42dmq3y0li3y/srtm90.tif?raw=1", "srtmVN", "srtm90.tif", mode = "wb")
     else return(NULL)
   }
   data("srtm90", package = "srtmVN")
