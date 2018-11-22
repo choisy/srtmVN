@@ -19,6 +19,5 @@ Suggests: knitr,
     marc
 Remotes: choisy/mcdev
 LazyData: TRUE
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 VignetteBuilder: knitr
-
