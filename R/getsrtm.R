@@ -57,7 +57,7 @@ getsrtm <- function() {
       download("https://www.dropbox.com/s/94e42dmq3y0li3y/srtm90.tif?raw=1", "srtmVN", "srtm90.tif", mode = "wb")
     else return(NULL)
   }
-  data("srtm90", package = "srtmVN")
+  data("srtm90", package = "srtmVN", envir = environment())
   srtm90@file@name <- system.file("extdata", "srtm90.tif", package = "srtmVN")
   srtm90
 }
