@@ -16,9 +16,9 @@ Imports:
 Suggests: knitr,
     rmarkdown,
     gadmVN,
-    marc
+    marc,
+    sf
 Remotes: choisy/mcdev
 LazyData: TRUE
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 VignetteBuilder: knitr
-
