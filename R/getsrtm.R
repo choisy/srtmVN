@@ -46,19 +46,24 @@
 #'                      buffer = 30000)
 #' mean(unlist(ele_dalat))
 #'
-#' @importFrom mcdev download
-#' @importFrom utils data installed.packages
+#' @importFrom utils data installed.packages download.file
 #'
 #' @export
 getsrtm <- function() {
-  if (!file.exists(paste0(installed.packages()["srtmVN", "LibPath"], "/srtmVN/extdata/srtm90.tif"))) {
+  if (!file.exists(paste0(installed.packages()["srtmVN", "LibPath"],
+                          "/srtmVN/extdata/srtm90.tif"))) {
     message("SRTM data are not on disk.")
-    message("Do you want to download them from the internet (108.0 MB)? y (default) / n")
+    message("Do you want to download them from the internet (108.0 MB)?",
+            " y (default) / n")
     ans <- readline()
-    if (ans %in% c("y", ""))
-#      download("www.dropbox.com/s/94e42dmq3y0li3y/srtm90.tif?raw=1", "srtmVN", "srtm90.tif")
-      download("http://marcchoisy.free.fr/srtm90.tif", "srtmVN", "srtm90.tif")
-    else return(NULL)
+    if (ans %in% c("y", "")) {
+      path <- paste0(find.package("srtmVN"), "/extdata")
+      if (!dir.exists(path)) dir.create(path)
+      download.file("http://marcchoisy.free.fr/srtm90.tif",
+                    paste0(path, "/srtm90.tif"), mode = "wb")
+    } else {
+      return(NULL) #nocov
+    }
   }
   data("srtm90", package = "srtmVN")
   srtm90@file@name <- system.file("extdata", "srtm90.tif", package = "srtmVN")
