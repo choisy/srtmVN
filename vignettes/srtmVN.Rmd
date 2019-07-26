@@ -20,11 +20,11 @@ fig.width=4.24725,fig.retina=2,fig.align="center")
 
 ## Installation and loading
 
-You can install `srtmVN` from [Bitbucket](https://bitbucket.org/choisy/srtmVN)
+You can install `srtmVN` from [GitHub](https://github.com/choisy/srtmVN)
 
 ```{r eval = FALSE}
 # install.packages("devtools")
-devtools::install_bitbucket("choisy/srtmVN", build_vignettes = TRUE)
+devtools::install_github("choisy/srtmVN", build_vignettes = TRUE)
 ```
 
 Once installed, you can load the package:
