@@ -65,7 +65,7 @@ getsrtm <- function() {
       return(NULL) #nocov
     }
   }
-  data("srtm90", package = "srtmVN")
+  data("srtm90", package = "srtmVN", envir = environment())
   srtm90@file@name <- system.file("extdata", "srtm90.tif", package = "srtmVN")
   srtm90
 }
