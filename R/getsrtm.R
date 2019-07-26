@@ -4,6 +4,8 @@
 #'
 #' @source The CGIAR consortium (\url{http://srtm.csi.cgiar.org}).
 #' @examples
+#' library(raster)
+#' library(sp)
 #' # getting the data:
 #' srtm <- getsrtm()
 #' srtm

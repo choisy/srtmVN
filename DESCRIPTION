@@ -15,6 +15,7 @@ Description: Contains the elevation data for Vietnam from the SRTM90 data base
 License: MIT + file LICENSE
 URL: https://github.com/choisy/srtmVN
 BugReports: https://github.com/choisy/srtmVN/issues
+Encoding: UTF-8
 Depends:
     R (>= 2.10)
 Suggests: 
@@ -22,6 +23,8 @@ Suggests:
     rmarkdown,
     gadmVN,
     sf,
+    raster,
+    sp,
     testthat
 LazyData: TRUE
 RoxygenNote: 6.1.1

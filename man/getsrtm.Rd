@@ -13,6 +13,8 @@ getsrtm()
 \code{getsrtm} returns a RasterLayer object that points to a GeoTIFF file on disk containing the SRTM90 for Vietnam.
 }
 \examples{
+library(raster)
+library(sp)
 # getting the data:
 srtm <- getsrtm()
 srtm
