@@ -13,8 +13,8 @@ Authors@R: c(person("Marc", "Choisy",
 Description: Contains the elevation data for Vietnam from the SRTM90 data base
     (CGIAR).
 License: MIT + file LICENSE
-URL: https://github.com/choisy/srtmVN
-BugReports: https://github.com/choisy/srtmVN/issues
+URL: https://github.com/epix-project/srtmVN
+BugReports: https://github.com/epix-project/srtmVN/issues
 Encoding: UTF-8
 Depends:
     R (>= 2.10)
