@@ -13,6 +13,8 @@ getsrtm()
 \code{getsrtm} returns a RasterLayer object that points to a GeoTIFF file on disk containing the SRTM90 for Vietnam.
 }
 \examples{
+library(raster)
+library(sp)
 # getting the data:
 srtm <- getsrtm()
 srtm
@@ -26,20 +28,21 @@ plot(srtm)
 plot(srtm, axes = FALSE, legend = FALSE)
 
 # Plotting first the administrative limits of the country and then the elevations:
-plot(gadmVN::gadm(level = "country"))
+library(sf)
+plot(st_geometry(gadmVN::gadm(level = "country")))
 plot(srtm, axes = FALSE, legend = FALSE, add = TRUE)
 
 # Cropping elevation inside one polygon:
 hanoi <- subset(gadmVN::gadm(resolution = "high"), province == "Ha Noi")
 hanoi_ele <- crop(srtm, hanoi)
 plot(hanoi_ele)
-plot(hanoi, add = TRUE)
+plot(st_geometry(hanoi), add = TRUE)
 
 # Removing anything that outside the polygon:
 themask <- rasterize(hanoi, hanoi_ele)
 hanoi_ele <- mask(hanoi_ele, themask)
 plot(hanoi_ele)
-plot(hanoi, add = TRUE)
+plot(st_geometry(hanoi), add = TRUE)
 
 # Extracting the elevation in 1 point:
 extract(srtm, matrix(c(105, 21), 1))

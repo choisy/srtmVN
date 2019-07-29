@@ -4,6 +4,8 @@
 #'
 #' @source The CGIAR consortium (\url{http://srtm.csi.cgiar.org}).
 #' @examples
+#' library(raster)
+#' library(sp)
 #' # getting the data:
 #' srtm <- getsrtm()
 #' srtm
@@ -17,20 +19,21 @@
 #' plot(srtm, axes = FALSE, legend = FALSE)
 #'
 #' # Plotting first the administrative limits of the country and then the elevations:
-#' plot(gadmVN::gadm(level = "country"))
+#' library(sf)
+#' plot(st_geometry(gadmVN::gadm(level = "country")))
 #' plot(srtm, axes = FALSE, legend = FALSE, add = TRUE)
 #'
 #' # Cropping elevation inside one polygon:
 #' hanoi <- subset(gadmVN::gadm(resolution = "high"), province == "Ha Noi")
 #' hanoi_ele <- crop(srtm, hanoi)
 #' plot(hanoi_ele)
-#' plot(hanoi, add = TRUE)
+#' plot(st_geometry(hanoi), add = TRUE)
 #'
 #' # Removing anything that outside the polygon:
 #' themask <- rasterize(hanoi, hanoi_ele)
 #' hanoi_ele <- mask(hanoi_ele, themask)
 #' plot(hanoi_ele)
-#' plot(hanoi, add = TRUE)
+#' plot(st_geometry(hanoi), add = TRUE)
 #'
 #' # Extracting the elevation in 1 point:
 #' extract(srtm, matrix(c(105, 21), 1))
@@ -45,17 +48,24 @@
 #'                      buffer = 30000)
 #' mean(unlist(ele_dalat))
 #'
-#' @importFrom mcdev download
+#' @importFrom utils data installed.packages download.file
 #'
 #' @export
 getsrtm <- function() {
-  if (!file.exists(paste0(installed.packages()["srtmVN", "LibPath"], "/srtmVN/extdata/srtm90.tif"))) {
+  if (!file.exists(paste0(installed.packages()["srtmVN", "LibPath"],
+                          "/srtmVN/extdata/srtm90.tif"))) {
     message("SRTM data are not on disk.")
-    message("Do you want to download them from the internet (108.0 MB)? y (default) / n")
+    message("Do you want to download them from the internet (108.0 MB)?",
+            " y (default) / n")
     ans <- readline()
-    if (ans %in% c("y", ""))
-      download("https://www.dropbox.com/s/94e42dmq3y0li3y/srtm90.tif?raw=1", "srtmVN", "srtm90.tif", mode = "wb")
-    else return(NULL)
+    if (ans %in% c("y", "")) {
+      path <- paste0(find.package("srtmVN"), "/extdata")
+      if (!dir.exists(path)) dir.create(path)
+      download.file("http://marcchoisy.free.fr/srtm90.tif",
+                    paste0(path, "/srtm90.tif"), mode = "wb")
+    } else {
+      return(NULL) #nocov
+    }
   }
   data("srtm90", package = "srtmVN", envir = environment())
   srtm90@file@name <- system.file("extdata", "srtm90.tif", package = "srtmVN")
