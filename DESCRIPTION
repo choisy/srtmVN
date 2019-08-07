@@ -23,6 +23,7 @@ Suggests:
     rmarkdown,
     gadmVN,
     sf,
+    rgdal,
     raster,
     sp,
     testthat
