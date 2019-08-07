@@ -26,6 +26,8 @@ Suggests:
     raster,
     sp,
     testthat
+Remotes:
+    epix-project/gadmVN
 LazyData: TRUE
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr
