@@ -7,16 +7,18 @@
 
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/epix-project/srtmVN?branch=master&svg=true)](https://ci.appveyor.com/project/epix-project/srtmVN)
+[![Travis build
+status](https://travis-ci.org/epix-project/srtmVN.svg?branch=master)](https://travis-ci.org/epix-project/srtmVN)
 <!-- badges: end -->
 
 ## Installation and loading
 
 You can install `srtmVN` from
-[Bitbucket](https://bitbucket.org/choisy/srtmVN)
+[GitHub](https://github.com/epix-project/srtmVN)
 
 ``` r
 # install.packages("devtools")
-devtools::install_bitbucket("choisy/srtmVN", build_vignettes = TRUE)
+devtools::install_github("epix-project/srtmVN", build_vignettes = TRUE)
 ```
 
 Once installed, you can load the package:
@@ -32,8 +34,6 @@ function:
 
 ``` r
 srtm <- getsrtm()
-#> SRTM data are not on disk.
-#> Do you want to download them from the internet (108.0 MB)? y (default) / n
 #> Loading required package: raster
 #> Loading required package: sp
 ```
