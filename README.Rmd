@@ -1,0 +1,57 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# srtmVN
+
+<!-- badges: start -->
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/epix-project/srtmVN?branch=master&svg=true)](https://ci.appveyor.com/project/epix-project/srtmVN)
+[![Travis build status](https://travis-ci.org/epix-project/srtmVN.svg?branch=master)](https://travis-ci.org/epix-project/srtmVN)
+[![Codecov test coverage](https://codecov.io/gh/epix-project/srtmVN/branch/master/graph/badge.svg)](https://codecov.io/gh/epix-project/srtmVN?branch=master)
+<!-- badges: end -->
+
+## Installation and loading
+
+You can install `srtmVN` from [GitHub](https://github.com/epix-project/srtmVN)
+
+```{r eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("epix-project/srtmVN", build_vignettes = TRUE)
+```
+
+Once installed, you can load the package:
+
+```{r}
+library(srtmVN)
+```
+
+## Usage examples
+
+The `RasterLayer` DEM from SRTM can be retrieved with the `getsrtm` function:
+
+```{r}
+srtm <- getsrtm()
+```
+
+It's a `RasterLayer` object:
+
+```{r}
+srtm
+```
+
+that can be plotted with the `plot` method:
+
+```{r}
+plot(srtm)
+```
+

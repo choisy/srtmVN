@@ -23,9 +23,13 @@ Suggests:
     rmarkdown,
     gadmVN,
     sf,
+    rgdal,
     raster,
     sp,
-    testthat
+    testthat,
+    covr
+Remotes:
+    epix-project/gadmVN
 LazyData: TRUE
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr
