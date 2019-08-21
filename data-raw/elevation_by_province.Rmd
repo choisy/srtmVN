@@ -1,0 +1,189 @@
+---
+title: "Elevation by province"
+csl: the-american-naturalist.csl
+output:
+  html_document:
+    theme: cerulean
+    toc: yes
+  pdf_document:
+    toc: yes
+<!-- bibliography: references.bib -->
+editor_options: 
+  chunk_output_type: console
+---
+
+<!--
+IMAGES:
+Insert them with: ![alt text](image.png)
+You can also resize them if needed: convert image.png -resize 50% image.png
+If you want to center the image, go through HTML code:
+<div style="text-align:center"><img src ="image.png"/></div>
+
+REFERENCES:
+For references: Put all the bibTeX references in the file "references.bib"
+in the current folder and cite the references as @key or [@key] in the text.
+Uncomment the bibliography field in the above header and put a "References"
+title wherever you want to display the reference list.
+-->
+
+<style type="text/css">
+.main-container {
+  max-width: 1370px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+```{r general options, include = FALSE}
+knitr::knit_hooks$set(
+  margin = function(before, options, envir) {
+    if (before) par(mgp = c(1.5, .5, 0), bty = "n", plt = c(.105, .97, .13, .97))
+    else NULL
+  },
+  prompt = function(before, options, envir) {
+    options(prompt = if (options$engine %in% c("sh", "bash")) "$ " else "> ")
+  })
+
+knitr::opts_chunk$set(cache = TRUE, autodep = TRUE, message = FALSE, warning = FALSE,
+                      margin = TRUE, dev.args = list(pointsize = 11), fig.height = 3.5,
+                      fig.width = 4.24725, fig.retina = 2, fig.align = "center",
+                      eval = FALSE)
+
+options(width = 137)
+```
+
+## Introduction
+
+This script shows how to generate average elevations by province. We consider
+2 measures of average elevation. The first one, `elevation1` is the simple
+mean elevation of all the pixels inside a given province. The second one,
+`elevation2` is an average of the elevation, weighted by local population
+density, in these same pixels. Here we show how to generate this data frame.
+
+## Packages
+
+```{r}
+library(sp)
+library(raster)
+library(sptools)
+```
+
+## Data sets
+
+Human population density raster:
+
+```{r}
+popdensity <- worldpopVN::getpop()
+```
+
+Not projected, with 0.000833 resolution:
+
+```{r}
+popdensity
+```
+
+Elevation raster
+
+```{r}
+srtm <- srtmVN::getsrtm()
+```
+
+Not projected, with 0.000833 resolution:
+
+```{r}
+srtm
+```
+
+The provinces polygons:
+
+```{r}
+provinces <- sf::as_Spatial(gadmVN::gadm())
+```
+
+Not projected:
+
+```{r}
+proj4string(provinces)
+```
+
+## Making sure that the 2 rasters are on the same grid
+
+We need to resample `srtm` on `popdensity` (takes about 2'):
+
+```{r}
+srtm2 <- resample(srtm, popdensity)
+```
+
+we can now compare `srtm2` with `popdensity`:
+
+```{r}
+srtm2
+```
+
+```{r}
+popdensity
+```
+
+## Splitting the rasters by provinces
+
+Next, we need to split these 2 rasters by the provinces of the polygons (takes
+about 20' each):
+
+```{r}
+system.time(srtm_split <- split_on_poly(srtm2, provinces))
+saveRDS(srtm_split, "srtm_split.rds")
+```
+
+and:
+
+```{r}
+popdensity_split <- split_on_poly(popdensity, provinces)
+```
+
+## Calculating population weights
+
+Let's consider the following scaling function:
+
+```{r}
+scaling <- function(x) {
+  v <- values(x)
+  values(x) <- v / sum(v, na.rm = TRUE)
+  x
+}
+```
+
+And let's run it on the population raster of each province:
+
+```{r}
+popdensity_split2 <- purrr::map(popdensity_split, scaling)
+```
+
+## Putting together and saving to disk
+
+```{r}
+srtm_prov <- data.frame(
+  province = provinces$province,
+  elevation1 = unlist(purrr::map(srtm_split, ~ mean(values(.), na.rm = TRUE))),
+  elevation2 = unlist(purrr::map2(popdensity_split2, srtm_split, ~ sum(values(.x) * values(.y), na.rm = TRUE)))
+)
+```
+
+```{r}
+usethis::use_data(srtm_prov, overwrite = TRUE)
+```
+
+## Comparing the 2 measures of elevation
+
+```{r}
+plot(elevation2 ~ elevation1, srtm_prov, xlab = "weighted by population density", ylab = "non weighted")
+abline(0, 1)
+```
+
+
+
+
+
+
+
+
+
